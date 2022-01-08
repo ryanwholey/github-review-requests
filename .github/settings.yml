@@ -16,5 +16,5 @@ labels:
     description: An issue.
   - name: feature
     description: New functionality.
-  - name: Help Wanted
+  - name: help
     description: Contributions welcome!
