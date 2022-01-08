@@ -3,16 +3,18 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"os/signal"
 	"time"
 
 	"github.com/ryanwholey/github-review-requests/internal/github"
 	"github.com/ryanwholey/github-review-requests/internal/io"
+	"github.com/ryanwholey/github-review-requests/internal/meta"
 	"github.com/ryanwholey/github-review-requests/internal/run"
 	"github.com/ryanwholey/github-review-requests/internal/storage"
 	"github.com/spf13/cobra"
 )
 
-func NewCommand(streams io.Streams) *cobra.Command {
+func NewCommand(meta meta.Meta, streams io.Streams) *cobra.Command {
 	var username string
 	var storagePath string
 	var interval time.Duration
@@ -28,16 +30,30 @@ func NewCommand(streams io.Streams) *cobra.Command {
 				return fmt.Errorf("environment variable GH_TOKEN must be set")
 			}
 
-			gh := github.New(ctx, username, token)
+			gh := github.New(ctx, username, token, meta)
 			sm := storage.NewManager(storagePath, clean)
 
+			first := run.Run(ctx, gh, sm, streams)
+
 			if interval == 0 {
-				return run.Run(ctx, gh, sm, streams)
+				return first
 			}
 
-			// TODO: Implement timer loop
+			sigChan := make(chan os.Signal, 1)
+			signal.Notify(sigChan, os.Interrupt)
 
-			return nil
+			timer := time.Tick(interval)
+
+			for {
+				select {
+				case <-timer:
+					if err := run.Run(ctx, gh, sm, streams); err != nil {
+						return err
+					}
+				case <-sigChan:
+					return nil
+				}
+			}
 		},
 	}
 
