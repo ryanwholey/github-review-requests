@@ -1,0 +1,33 @@
+package github
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/google/go-github/github"
+	"golang.org/x/oauth2"
+)
+
+type Client struct {
+	username string
+	client   *github.Client
+}
+
+func New(ctx context.Context, username string, token string) Client {
+	client := github.NewClient(
+		oauth2.NewClient(ctx, oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})),
+	)
+
+	return Client{
+		client:   client,
+		username: username,
+	}
+}
+
+func (c Client) GetReviews(ctx context.Context) (*github.IssuesSearchResult, *github.Response, error) {
+	return c.client.Search.Issues(
+		ctx,
+		fmt.Sprintf("is:open is:pr review-requested:%s archived:false", c.username),
+		&github.SearchOptions{},
+	)
+}
