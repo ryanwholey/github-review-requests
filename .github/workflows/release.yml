@@ -23,7 +23,7 @@ jobs:
         with:
           app_id: ${{ secrets.HOMEBREW_APP_ID }}
           private_key: ${{ secrets.HOMEBREW_PRIVATE_KEY }}
-          repository: takescoop/homebrew-formulas
+          repository: ryanwholey/homebrew-formulas
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2

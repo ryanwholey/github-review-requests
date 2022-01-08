@@ -1,0 +1,20 @@
+repository:
+  name: github-review-requests
+  description: A CLI to notify on PR review request
+  homepage: https://github.com/ryanwholey/github-review-requests
+  topics: github
+  private: false
+  default_branch: main
+  allow_squash_merge: true
+  allow_merge_commit: false
+  allow_rebase_merge: false
+  delete_branch_on_merge: true
+  enable_automated_security_fixes: true
+  enable_vulnerability_alerts: true
+labels:
+  - name: bug
+    description: An issue.
+  - name: feature
+    description: New functionality.
+  - name: Help Wanted
+    description: Contributions welcome!
