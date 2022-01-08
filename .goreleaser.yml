@@ -1,0 +1,9 @@
+builds:
+  - binary: grr
+brews:
+  - tap:
+      owner: ryanwholey 
+      name: homebrew-formulas
+    folder: HomebrewFormula
+    homepage: https://github.com/takescoop/github-review-requests
+    description: CLI tool to notify when a GitHub PR review is requested
