@@ -7,6 +7,10 @@ import (
 type Reviews []Review
 
 func (r Reviews) String() string {
+	if len(r) == 0 {
+		return "No reviews"
+	}
+
 	t := table.NewWriter()
 
 	t.AppendHeader(table.Row{
