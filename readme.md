@@ -21,7 +21,7 @@ grr --username <user> --interval 5m
 | `--username\|-u` | GitHub username | `true` | `GH_USERNAME` env var, else `""` |
 | `--storage\|-s` | Path to a storage file | `false` | `~/.github-review-request-storage`|
 | `--interval\|-i` | Interval to poll for new requests (e.g. `30s`, `5m`, etc.). If zero, run once and exit. | `false` | `0` |
-| `--clean|-c` | Remove storage file on initialization | `false` | `false` |
+| `--clean\|-c` | Remove storage file on initialization | `false` | `false` |
 
 ## Release
 
