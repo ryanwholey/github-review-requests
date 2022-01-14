@@ -14,6 +14,8 @@ brew install ryanwholey/formulas/github-review-requests
 grr --username <user> --interval 5m
 ```
 
+The CLI expects `GH_TOKEN` to be set in the environment.
+
 ### Flags
 
 | Flag | Description | Required | Default |
